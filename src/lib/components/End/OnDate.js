@@ -21,10 +21,11 @@ const EndOnDate = ({
   const CustomCalendar = options.calendarComponent;
 
   const locale = options.weekStartsOnSunday ? 'en-ca' : 'en-gb';
+  const dateTimeFormat = options.dateTimeFormat || DATE_TIME_FORMAT;
   const calendarAttributes = {
     'aria-label': translateLabel(translations, 'end.tooltip'),
     value: date,
-    dateFormat: DATE_TIME_FORMAT,
+    dateFormat: dateTimeFormat,
     locale,
     readOnly: true,
   };
@@ -64,7 +65,7 @@ const EndOnDate = ({
             onChange={(inputDate) => {
               const editedEvent = {
                 target: {
-                  value: moment(inputDate).format(DATE_TIME_FORMAT),
+                  value: moment(inputDate).format(dateTimeFormat),
                   name: 'end.onDate.date',
                 },
               };
@@ -87,7 +88,8 @@ EndOnDate.propTypes = {
     }).isRequired,
   }).isRequired,
   handleChange: PropTypes.func.isRequired,
-  translations: PropTypes.oneOfType([PropTypes.object, PropTypes.func])
+  translations: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+  dateTimeFormat: PropTypes.string
 };
 
 export default EndOnDate;

@@ -9,6 +9,7 @@ import computeRRuleToString from '../utils/computeRRule/toString/computeRRule';
 import computeRRuleFromString from '../utils/computeRRule/fromString/computeRRule';
 import configureInitialState from '../utils/configureInitialState';
 import translateLabel from '../utils/translateLabel';
+import { DATE_TIME_FORMAT } from '../constants';
 import '../styles/index.css';
 
 class ReactRRuleGenerator extends PureComponent {
@@ -17,6 +18,7 @@ class ReactRRuleGenerator extends PureComponent {
     this.props.config,
     this.props.calendarComponent,
     this.props.id,
+    this.props.dateTimeFormat
   );
 
   componentWillMount() {
@@ -28,14 +30,14 @@ class ReactRRuleGenerator extends PureComponent {
 
     if (this.props.value) {
       // if value is provided to RRuleGenerator, it's used to compute state of component's forms
-      const data = computeRRuleFromString(this.state.data, this.props.value);
+      const data = computeRRuleFromString(this.state.data, this.props.value, this.props.dateTimeFormat);
       this.setState({ data });
     }
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.value) {
-      const data = computeRRuleFromString(this.state.data, nextProps.value);
+      const data = computeRRuleFromString(this.state.data, nextProps.value, this.props.dateTimeFormat);
       this.setState({ data });
     }
   }
@@ -132,7 +134,8 @@ ReactRRuleGenerator.propTypes = {
   value: PropTypes.string,
   onChange: PropTypes.func,
   calendarComponent: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
-  translations: PropTypes.oneOfType([PropTypes.object, PropTypes.func])
+  translations: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+  dateTimeFormat: PropTypes.string
 };
 ReactRRuleGenerator.defaultProps = {
   id: null,
@@ -227,7 +230,8 @@ ReactRRuleGenerator.defaultProps = {
       on_date: "On date",
       executions: "executions."
     }
-  }  
+  },
+  dateTimeFormat: DATE_TIME_FORMAT
 };
 
 export default ReactRRuleGenerator;

@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-const computeEnd = ({ mode, after, onDate: { date } }) => {
+const computeEnd = ({ mode, after, onDate: { date } }, dateTimeFormat) => {
   const end = {};
 
   if (mode === 'After') {
@@ -8,7 +8,7 @@ const computeEnd = ({ mode, after, onDate: { date } }) => {
   }
 
   if (mode === 'On date') {
-    end.until = moment(date).format();
+    end.until = moment(date, dateTimeFormat).format();
   }
 
   return end;

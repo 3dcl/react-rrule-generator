@@ -20,10 +20,11 @@ const StartOnDate = ({
 }) => {
   const CustomCalendar = options.calendarComponent;
   const locale = options.weekStartsOnSunday ? 'en-ca' : 'en-gb';
+  const dateTimeFormat = options.dateTimeFormat || DATE_TIME_FORMAT;
   const calendarAttributes = {
     'aria-label': translateLabel(translations, 'start.tooltip'),
     value: date,
-    dateFormat: DATE_TIME_FORMAT,
+    dateFormat: dateTimeFormat,
     locale,
     readOnly: true,
   };
@@ -63,7 +64,7 @@ const StartOnDate = ({
             onChange={(inputDate) => {
               const editedEvent = {
                 target: {
-                  value: moment(inputDate).format(DATE_TIME_FORMAT),
+                  value: moment(inputDate).format(dateTimeFormat),
                   name: 'start.onDate.date',
                 },
               };
@@ -86,7 +87,8 @@ StartOnDate.propTypes = {
     }).isRequired,
   }).isRequired,
   handleChange: PropTypes.func.isRequired,
-  translations: PropTypes.oneOfType([PropTypes.object, PropTypes.func])
+  translations: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+  dateTimeFormat: PropTypes.string
 };
 
 export default StartOnDate;

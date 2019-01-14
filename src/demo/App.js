@@ -32,6 +32,10 @@ class App extends Component {
     return (this.state.language === 'de') ? GermanTranslation : undefined;
   }
 
+  getDateTimeFormat = () => {
+    return (this.state.language === 'de') ? 'DD.MM.YYYY' : undefined;
+  }
+
   render() {
     const { rrule, isCopied } = this.state;
 
@@ -72,6 +76,7 @@ class App extends Component {
               hideStart: false
             }}
             translations={this.getTranslation()}
+            dateTimeFormat={this.getDateTimeFormat()}
           />
         </div>
 

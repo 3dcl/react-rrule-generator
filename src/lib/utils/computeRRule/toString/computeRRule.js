@@ -10,11 +10,11 @@ const computeRRule = ({
   repeat,
   end,
   options,
-}) => {
+}, dateTimeFormat) => {
   const rruleObject = {
-    ...computeStart(start),
+    ...computeStart(start, dateTimeFormat),
     ...computeRepeat(repeat),
-    ...computeEnd(end),
+    ...computeEnd(end, dateTimeFormat),
     ...computeOptions(options),
   };
   const rrule = new RRule(rruleObject);

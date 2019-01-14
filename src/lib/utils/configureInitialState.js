@@ -4,21 +4,23 @@ import { isEmpty, uniqueId } from 'lodash';
 import computeRRuleToString from './computeRRule/toString/computeRRule';
 import { DATE_TIME_FORMAT } from '../constants/index';
 
-const configureState = (config = {}, calendarComponent, id) => {
+const configureState = (config = {}, calendarComponent, id, dateTimeFormat) => {
   const configureFrequency = () => (config.repeat ? config.repeat[0] : 'Yearly');
   const configureYearly = () => (config.yearly || 'on');
   const configureMonthly = () => (config.monthly || 'on');
   const configureEnd = () => (config.end ? config.end[0] : 'Never');
   const configureHideStart = () => (typeof config.hideStart === 'undefined' ? true : config.hideStart);
   const uniqueRruleId = isEmpty(id) ? uniqueId('rrule-') : id;
+  dateTimeFormat = dateTimeFormat || DATE_TIME_FORMAT;
 
   const data = {
     start: {
       onDate: {
-        date: moment().format(DATE_TIME_FORMAT),
+        date: moment().format(dateTimeFormat),
         options: {
-          weekStartsOnSunday: config.weekStartsOnSunday,
+          weekStartsOnSunday: config.weekStartsOnSunday,          
           calendarComponent,
+          dateTimeFormat
         },
       },
     },
@@ -65,7 +67,7 @@ const configureState = (config = {}, calendarComponent, id) => {
           sun: false,
         },
         options: {
-          weekStartsOnSunday: config.weekStartsOnSunday,
+          weekStartsOnSunday: config.weekStartsOnSunday
         },
       },
       daily: {
@@ -82,10 +84,11 @@ const configureState = (config = {}, calendarComponent, id) => {
       mode: configureEnd(),
       after: 1,
       onDate: {
-        date: moment().format(DATE_TIME_FORMAT),
+        date: moment().format(dateTimeFormat),
         options: {
           weekStartsOnSunday: config.weekStartsOnSunday,
           calendarComponent,
+          dateTimeFormat
         },
       },
       options: {
