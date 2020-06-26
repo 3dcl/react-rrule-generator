@@ -2,17 +2,18 @@ import React, { Component } from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import TextareaAutosize from 'react-autosize-textarea';
 
-import ReactRRuleGenerator from '../lib';
+import ReactRRuleGenerator, { translations } from '../lib';
 import './index.css';
 import githubLogo from './github_logo.png';
-import GermanTranslation from './GermanTranslation';
 
 class App extends Component {
   state = {
-    rrule: 'FREQ=YEARLY;BYMONTH=1;BYMONTHDAY=1',
+    rrule: 'DTSTART:20190301T230000Z\nFREQ=YEARLY;BYMONTH=1;BYMONTHDAY=1',
     isCopied: false,
-    language: 'en'
+    language: 'en',
   };
+
+  getTranslation = () => (this.state.language === 'de') ? translations.german : undefined;
 
   handleChangeLanguage = (event) => {
     event.persist();
@@ -23,14 +24,10 @@ class App extends Component {
   handleChange = (newRRule) => {
     this.setState({ rrule: newRRule, isCopied: false });
   };
-  
+
   handleCopy = () => {
     this.setState({ isCopied: true });
   };
-
-  getTranslation = () => {
-    return (this.state.language === 'de') ? GermanTranslation : undefined;
-  }
 
   getDateTimeFormat = () => {
     return (this.state.language === 'de') ? 'DD.MM.YYYY' : undefined;
@@ -73,7 +70,7 @@ class App extends Component {
             onChange={this.handleChange}
             value={this.state.rrule}
             config={{
-              hideStart: false
+              hideStart: false,
             }}
             translations={this.getTranslation()}
             dateTimeFormat={this.getDateTimeFormat()}
@@ -82,7 +79,7 @@ class App extends Component {
 
         <hr className="mt-5 mb-5" />
 
-        <div className="container">        
+        <div className="container">
           <h5><strong>Example handling</strong></h5>
 
           <div className="px-3 pt-3 border rounded">
@@ -124,8 +121,8 @@ class App extends Component {
 
         <hr className="mt-5 mb-5" />
 
-        <div className="container">
-          <h5><strong>{'Language'}</strong></h5>
+        <div className="container mb-5">
+          <h5><strong>Config</strong></h5>
           <div className="px-3 pt-3 border rounded">
             <div className="form-group row d-flex align-items-sm-center">
               <div className="col-sm-2 text-sm-right">
@@ -141,10 +138,10 @@ class App extends Component {
                   <option value="en">English</option>
                   <option value="de">German</option>
                 </select>
-              </div>            
+              </div>
             </div>
           </div>
-        </div>        
+        </div>
       </div>
     );
   }
