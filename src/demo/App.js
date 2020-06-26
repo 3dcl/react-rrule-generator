@@ -13,13 +13,9 @@ class App extends Component {
     language: 'en',
   };
 
-  getTranslation = () => (this.state.language === 'de') ? translations.german : undefined;
+  getTranslation = () => ((this.state.language === 'de') ? translations.german : undefined)
 
-  handleChangeLanguage = (event) => {
-    event.persist();
-    const newLanguage = event.target.value;
-    this.setState({ language: newLanguage });
-  };
+  getDateTimeFormat = () => ((this.state.language === 'de') ? 'DD.MM.YYYY' : undefined)
 
   handleChange = (newRRule) => {
     this.setState({ rrule: newRRule, isCopied: false });
@@ -29,9 +25,11 @@ class App extends Component {
     this.setState({ isCopied: true });
   };
 
-  getDateTimeFormat = () => {
-    return (this.state.language === 'de') ? 'DD.MM.YYYY' : undefined;
-  }
+  handleChangeLanguage = (event) => {
+    event.persist();
+    const newLanguage = event.target.value;
+    this.setState({ language: newLanguage });
+  };
 
   render() {
     const { rrule, isCopied } = this.state;
