@@ -22,6 +22,7 @@ import computeHourlyInterval from './computeHourlyInterval';
 import computeEndMode from './computeEndMode';
 import computeEndAfter from './computeEndAfter';
 import computeEndOnDate from './computeEndOnDate';
+import computeYearlyInterval from './computeYearlyInterval';
 
 const computeRRule = (data, rrule, dateTimeFormat) => {
   if (!rrule) {
@@ -37,7 +38,10 @@ const computeRRule = (data, rrule, dateTimeFormat) => {
       start: {
         ...data.start,
         onDate: {
-          date: moment(computeStartOnDate(data, rruleObj), dateTimeFormat).format(dateTimeFormat),
+          date: moment(
+            computeStartOnDate(data, rruleObj),
+            dateTimeFormat
+          ).format(dateTimeFormat),
           options: {
             ...data.start.onDate.options,
             weekStartsOnSunday: computeWeekStartDay(data, rruleObj),
@@ -50,6 +54,7 @@ const computeRRule = (data, rrule, dateTimeFormat) => {
         yearly: {
           ...data.repeat.yearly,
           mode: computeYearlyMode(data, rruleObj),
+          interval: computeYearlyInterval(data, rruleObj),
           on: {
             month: computeYearlyOnMonth(data, rruleObj),
             day: computeYearlyOnMonthday(data, rruleObj),
@@ -91,7 +96,9 @@ const computeRRule = (data, rrule, dateTimeFormat) => {
         mode: computeEndMode(data, rruleObj),
         after: computeEndAfter(data, rruleObj),
         onDate: {
-          date: moment(computeEndOnDate(data, rruleObj), dateTimeFormat).format(dateTimeFormat),
+          date: moment(computeEndOnDate(data, rruleObj), dateTimeFormat).format(
+            dateTimeFormat
+          ),
           options: {
             ...data.end.onDate.options,
             weekStartsOnSunday: computeWeekStartDay(data, rruleObj),
